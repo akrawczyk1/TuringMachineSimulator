@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .models import TuringMachine
+from src.models.simulator_models import TuringMachine
 
 app = FastAPI()
 @app.get("/")

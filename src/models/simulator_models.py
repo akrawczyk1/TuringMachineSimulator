@@ -14,13 +14,16 @@ class TransitionAction(BaseModel):
     next_state: str
 
 class TuringMachine(BaseModel):
-    states: List[str] # list of state names
+    states: List[str]  # list of state names
     initial_state: str
     accept_states: List[str]
     reject_states: List[str]
     transitions: Dict[str, TransitionAction]
     alphabet: List[str]
     blank_symbol: str
-    tape: List[str]
     head_position: int
+
+class Tape(BaseModel):
+    tape_contents: List[str]
+    fill_char: str
 
