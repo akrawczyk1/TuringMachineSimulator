@@ -21,9 +21,9 @@ class TuringMachine(BaseModel):
     transitions: Dict[str, TransitionAction]
     alphabet: List[str]
     blank_symbol: str
-    head_position: int
 
 class Tape(BaseModel):
     tape_contents: List[str]
-    fill_char: str
+    start_head_position: int
+    fill_symbol: str
 
