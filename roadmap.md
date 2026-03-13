@@ -24,3 +24,9 @@
 ## Phase 5 — Packaging
 - [ ] pywebview integration
 - [ ] PyInstaller bundling
+
+## Phase 6 — Stretch Goal: Rust Simulator Core
+- [ ] Rewrite `step()` and `run()` in Rust
+- [ ] Expose Rust implementation to Python via PyO3 + Maturin
+- [ ] Validate correctness against existing Python implementation
+- [ ] Headless / terminal-based interface for compute-heavy workloads
