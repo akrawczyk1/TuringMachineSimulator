@@ -1,7 +1,7 @@
 # Turing Machine Simulator — Project Roadmap
 
 ## Phase 1 — Finish the Core Simulator
-- [ ] Complete and harden `step()` — bounds checking, missing transition handling, halt-before-step guard
+- [x] Complete and harden `step()` — bounds checking, missing transition handling, halt-before-step guard
 - [ ] Write `run()` — loops `step()` until halt or step limit
 - [ ] Write pytest tests for `step()` and `run()`
 
