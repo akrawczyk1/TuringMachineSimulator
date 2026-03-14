@@ -1,0 +1,23 @@
+[project]
+name = "turingmachinesimulator"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "akrawczyk1",email = "a.krawczyk1203@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic (>=2.12.5,<3.0.0)",
+    "fastapi (>=0.135.1,<0.136.0)"
+]
+
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+package-mode = false
+
