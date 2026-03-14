@@ -43,15 +43,26 @@ class Simulator:
         lookup_key = self.current_state + "," + current_symbol
         return lookup_key
 
+    def check_head_in_bounds(self):
+        if 0 <= self.head_position < len(self.tape_contents):
+            pass
+        elif self.head_position < 0:
+            self.head_position = 0
+            self.tape_contents.insert(0, self.blank_symbol)
+        elif self.head_position >= len(self.tape_contents):
+            self.tape_contents.append(self.blank_symbol)
+
+
     def step(self) -> StepStatus:
         """
         Returns:
-            StepStatus.REJECT if no transition function or other error
-            StepStatus.ACCEPT if we end in an accept state
-            StepStatus.CONTINUE if we should keep running
+            StepStatus.REJECT if no transition function or other error\n
+            StepStatus.ACCEPT if we end in an accept state\n
+            StepStatus.CONTINUE if we should keep running\n
         :return:
         """
 
+        # This step exists in case the initial state is an accept state
         if self.current_state in self.accept_states:
             return StepStatus.ACCEPTED
 
@@ -60,22 +71,13 @@ class Simulator:
 
         # Look up the appropriate transition function
         lookup_key = self.craft_lookup_key(current_symbol)
-        try:
-            transition_action = self.transitions.get(lookup_key)
-        except KeyError:
+        transition_action = self.transitions.get(lookup_key)
+        if transition_action is None:
             return StepStatus.REJECTED
 
         # Write to tape according to current transition function
-        try:
-            self.tape_contents[self.head_position]
-        except IndexError:
-            if len(self.tape_contents) <= self.head_position:
-                self.tape_contents.append(self.blank_symbol)
-            else:
-                self.tape_contents.insert(0, self.blank_symbol)
-                self.head_position = 0
-        finally:
-            self.tape_contents[self.head_position] = transition_action.write_symbol
+
+        self.tape_contents[self.head_position] = transition_action.write_symbol
 
         # Move head according to transition function:
         if transition_action.move_direction.upper() == 'R':
@@ -85,6 +87,10 @@ class Simulator:
         else:
             raise RuntimeError(f"Head movement must be 'R' or 'L', got {transition_action.move_direction} instead.")
 
+        self.check_head_in_bounds()
         # Update the current state
         self.current_state = transition_action.next_state
-        return StepStatus.CONTINUE
+        if self.current_state in self.accept_states:
+            return StepStatus.ACCEPTED
+        else:
+            return StepStatus.CONTINUE
