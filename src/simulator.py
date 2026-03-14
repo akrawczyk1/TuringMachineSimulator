@@ -6,6 +6,7 @@ class StepStatus(Enum):
     CONTINUE = "continue"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
+    OVER_MAX_STEPS = f"over maximum allowable steps"
 
 class Simulator:
     def __init__(self, machine: TuringMachine, tape: Tape):
@@ -34,7 +35,8 @@ class Simulator:
 
     def check_tape_alphabet(self) -> bool:
         tape_alphabet = set(self.tape_contents)
-        tape_alphabet.add(self.fill_symbol)
+        if self.fill_symbol != self.blank_symbol:
+            tape_alphabet.add(self.fill_symbol)
 
         return tape_alphabet <= set(self.machine_alphabet)
 
@@ -51,6 +53,19 @@ class Simulator:
         elif self.head_position >= len(self.tape_contents):
             self.tape_contents.append(self.fill_symbol)
 
+    def run(self) -> StepStatus:
+        step_count = 0
+        while step_count < self.NUM_MAX_STEPS:
+
+            step_status = self.step()
+            step_count += 1
+
+            if step_status == StepStatus.CONTINUE:
+                continue
+            else:
+                return step_status
+
+        return StepStatus.OVER_MAX_STEPS
     def step(self) -> StepStatus:
         """
         Returns:
