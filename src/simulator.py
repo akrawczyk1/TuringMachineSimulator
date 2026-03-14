@@ -30,6 +30,8 @@ class Simulator:
                 "The tape alphabet is not a subset of the machine alphabet."
             )
 
+        self.check_head_in_bounds()
+
     def check_tape_alphabet(self) -> bool:
         tape_alphabet = set(self.tape_contents)
         tape_alphabet.add(self.fill_symbol)
