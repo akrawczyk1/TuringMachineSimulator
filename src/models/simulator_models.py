@@ -26,7 +26,6 @@ class TuringMachine(BaseModel):
     states: List[str]  # list of state names
     initial_state: str  # the name of the initial state
     accept_states: List[str]  # the names of the accept states
-    reject_states: List[str]  # the names of the reject states
     transitions: Dict[str, TransitionAction]  # [key: "state,read_char", value: TransitionAction
     alphabet: List[str]  # all symbols the machine should read other than the blank symbol
     blank_symbol: str = "_"
