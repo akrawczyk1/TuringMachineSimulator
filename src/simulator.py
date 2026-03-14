@@ -22,9 +22,6 @@ class Simulator:
         self.head_position = tape.start_head_position
         self.fill_symbol = tape.fill_symbol
 
-        self.in_accept_state = False
-        self.in_reject_state = False
-
         if self.fill_symbol is None:
             self.fill_symbol = self.blank_symbol
 
@@ -48,10 +45,9 @@ class Simulator:
             pass
         elif self.head_position < 0:
             self.head_position = 0
-            self.tape_contents.insert(0, self.blank_symbol)
+            self.tape_contents.insert(0, self.fill_symbol)
         elif self.head_position >= len(self.tape_contents):
-            self.tape_contents.append(self.blank_symbol)
-
+            self.tape_contents.append(self.fill_symbol)
 
     def step(self) -> StepStatus:
         """
